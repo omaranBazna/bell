@@ -1,0 +1,94 @@
+<html>
+<style>
+    body {
+	height: 100vh;
+	margin: 0;
+	display: grid;
+	place-items: center;
+	background: rgb(94, 201, 107);
+	background: linear-gradient(
+		0deg,
+		rgba(94, 201, 107, 1) 0%,
+		rgba(233, 233, 233, 1) 100%
+	);
+}
+
+.swing div {
+	font-size: 20rem;
+	margin: auto;
+}
+#bell {
+	font-size: 6rem;
+	transform-origin: 4rem 1rem;
+}
+#clock {
+	font-size: 15rem;
+	animation: spin 4s linear infinite;
+}
+.order {
+	padding: 15px 25px;
+	font-size: 25px;
+	font-weight: bold;
+	border-radius: 35px;
+	cursor: pointer;
+	border: none;
+	background: linear-gradient(rgb(255, 255, 0), rgb(0, 255, 0));
+	color: green;
+}
+
+</style>
+<body>
+    <p class="swing">
+        <div id="bell">🔔</div>
+        <div id="clock">⏱️</div>
+        
+        </p>
+        
+        <audio id="bellSound">
+            <source src="https://actions.google.com/sounds/v1/alarms/mechanical_clock_ring.ogg" preload="auto" type="audio/mp3" />
+        </audio>
+        <audio id="clockSound">
+            <source src="https://gamesounds.xyz/Sound%20Effects/Clock/clock-ticking-1.wav" preload="auto" type="audio/mp3" />
+        </audio>
+        <button class="order" onclick="play()">Order!</button>
+    </body>
+<script>
+    const clock = document.getElementById("clock");
+const bell = document.getElementById("bell");
+var audio = document.getElementById("bellSound");
+var audio2 = document.getElementById("clockSound");
+
+let i = 0;
+let u = 0;
+let speed = 0;
+function play() {
+	speed = 0.5;
+	audio2.play();
+}
+
+setInterval(() => {
+	i += speed;
+	if (i == 360) {
+		audio2.pause();
+		audio.currentTime = 0;
+		audio.play();
+	}
+	if (i > 360) {
+		u = i - 360;
+		bell.style.transform = `rotate(${
+			Math.cos(u / 5) * (10 + 20 * Math.random())
+		}deg)`;
+	}
+	if (i > 720) {
+		audio.pause();
+		speed = 0;
+		bell.style.transform = `rotate(${0}deg)`;
+		i = 0;
+	}
+	if (i <= 360) {
+		clock.style.transform = `rotate(${i}deg)`;
+	}
+}, 6);
+
+</script>
+</html>
